@@ -1,0 +1,50 @@
+﻿@model TaskApplication.Models.ToDo
+
+<h3>Вы действительно хотите удалить задачу?</h3>
+<div>
+    <h4>Удаление задачи</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Создал задачу
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaskName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfCreateTask)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfCreateTask)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

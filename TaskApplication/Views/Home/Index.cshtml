@@ -1,0 +1,110 @@
+﻿@model TaskApplication.Models.ToDo
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+@using (Html.BeginForm("CreateTask", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Создание задачи</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TaskName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TaskName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaskName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Создать задачу" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Активные</a></li>
+    <li><a data-toggle="tab" href="#services">Завершенные</a></li>
+</ul>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <h3>Активные задачи</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="info">
+                    <th>
+                        @Html.DisplayNameFor(model => model.TaskName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StatusId)
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+                @foreach (var item in ViewBag.ActiveTasks)
+                {
+                    <tr class="active">
+                        <td>
+                            @item.TaskName
+                        </td>
+                        <td>
+                            @item.Status
+                        </td>
+                        <td>
+                            <strong>
+                                @Html.ActionLink("Редактировать", "EditTask", new { id = item.Id }, new { @class = "glyphicon glyphicon-pencil" })
+                            </strong>
+                            <strong>
+                                @Html.ActionLink("Удалить", "DeleteTask", new { id = item.Id }, new { @class = "glyphicon glyphicon-pencil" })
+                            </strong>
+                            <strong>
+                                @Html.ActionLink("Выполнить задачу", "TaskIsCompleted", new { id = item.Id }, new { @class = "glyphicon glyphicon-pencil" })
+                            </strong>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div id="services" class="tab-pane fade">
+        <h3>Завершенные задачи</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="info">
+                    <th>
+                        @Html.DisplayNameFor(model => model.TaskName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StatusId)
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+                @foreach (var item in ViewBag.CompletedTasks)
+                {
+                    <tr class="active">
+                        <td>
+                            @item.TaskName
+                        </td>
+                        <td>
+                            @item.Status
+                        </td>
+                        <td>
+                            <strong>
+                                @Html.ActionLink("Удалить", "DeleteTask", new { id = item.Id }, new { @class = "glyphicon glyphicon-pencil" })
+                            </strong>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
